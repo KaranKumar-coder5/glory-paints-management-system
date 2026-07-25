@@ -1,0 +1,58 @@
+export const API_ENDPOINTS = {
+  AUTH: {
+    LOGIN: "/auth/login",
+    REGISTER: "/auth/register",
+    ME: "/auth/me",
+    PROFILE: "/auth/profile",
+    PASSWORD: "/auth/password",
+  },
+  VEHICLES: {
+    BASE: "/vehicles",
+    BY_ID: (id) => `/vehicles/${id}`,
+    STATUS: (id) => `/vehicles/${id}/status`,
+    IMAGES: (id) => `/vehicles/${id}/images`,
+  },
+  JOBS: {
+    BASE: "/jobs",
+    BY_ID: (id) => `/jobs/${id}`,
+    STATUS: (id) => `/jobs/${id}/status`,
+    MATERIALS: (id) => `/jobs/${id}/materials`,
+    ASSIGNED: "/jobs/assigned",
+  },
+  FC: {
+    BASE: "/fc",
+    BY_ID: (id) => `/fc/${id}`,
+    RESULT: (id) => `/fc/${id}/result`,
+    EXPIRING: "/fc/expiring",
+  },
+  INVOICES: {
+    BASE: "/invoices",
+    BY_ID: (id) => `/invoices/${id}`,
+    PAYMENT: (id) => `/invoices/${id}/payment`,
+    STATS: "/invoices/stats",
+  },
+  INVENTORY: {
+    BASE: "/inventory",
+    BY_ID: (id) => `/inventory/${id}`,
+    RESTOCK: (id) => `/inventory/${id}/restock`,
+    LOW_STOCK: "/inventory/low-stock",
+  },
+  EMPLOYEES: {
+    BASE: "/employees",
+    BY_ID: (id) => `/employees/${id}`,
+    STATUS: (id) => `/employees/${id}/status`,
+    STATS: (id) => `/employees/${id}/stats`,
+  },
+  CUSTOMERS: {
+    BASE: "/customers",
+    BY_PHONE: (phone) => `/customers/${phone}`,
+    VEHICLES: (phone) => `/customers/${phone}/vehicles`,
+  },
+  DASHBOARD: {
+    SUMMARY: "/dashboard/summary",
+    ACTIVITY: "/dashboard/activity",
+    STATUS_DIST: "/dashboard/status-distribution",
+    MONTHLY_REVENUE: "/dashboard/monthly-revenue",
+    MY_JOBS: "/dashboard/my-jobs",
+  },
+};
