@@ -13,14 +13,21 @@ const StatusBadge = ({ status }) => {
     delivered: "gray",
     pending: "yellow",
     in_progress: "blue",
+    repair_in_progress: "orange",
+    waiting_for_parts: "red",
     completed: "green",
     on_hold: "orange",
+    cancelled: "gray",
     passed: "green",
     failed: "red",
     scheduled: "blue",
     unpaid: "red",
     partial: "yellow",
     paid: "green",
+    low: "gray",
+    medium: "blue",
+    high: "orange",
+    urgent: "red",
   };
 
   return <Badge color={colorMap[status] || "gray"}>{formatStatus(status)}</Badge>;

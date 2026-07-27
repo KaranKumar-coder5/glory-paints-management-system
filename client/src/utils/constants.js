@@ -61,12 +61,39 @@ export const VEHICLE_TYPES = [
   { value: "other", label: "Other" },
 ];
 
+export const FUEL_TYPES = [
+  { value: "petrol", label: "Petrol" },
+  { value: "diesel", label: "Diesel" },
+  { value: "cng", label: "CNG" },
+  { value: "electric", label: "Electric" },
+  { value: "hybrid", label: "Hybrid" },
+  { value: "other", label: "Other" },
+];
+
 export const SERVICE_TYPES = [
   { value: "painting", label: "Painting" },
   { value: "repair", label: "Repair" },
   { value: "fc_inspection", label: "FC Inspection" },
   { value: "full_service", label: "Full Service" },
   { value: "other", label: "Other" },
+];
+
+export const JOB_CARD_STATUSES = [
+  { key: "pending", label: "Pending", color: "yellow" },
+  { key: "inspection", label: "Inspection", color: "blue" },
+  { key: "repair_in_progress", label: "Repair In Progress", color: "orange" },
+  { key: "waiting_for_parts", label: "Waiting For Parts", color: "red" },
+  { key: "painting", label: "Painting", color: "purple" },
+  { key: "quality_check", label: "Quality Check", color: "cyan" },
+  { key: "completed", label: "Completed", color: "green" },
+  { key: "cancelled", label: "Cancelled", color: "gray" },
+];
+
+export const JOB_PRIORITIES = [
+  { value: "low", label: "Low" },
+  { value: "medium", label: "Medium" },
+  { value: "high", label: "High" },
+  { value: "urgent", label: "Urgent" },
 ];
 
 export const INVENTORY_CATEGORIES = [

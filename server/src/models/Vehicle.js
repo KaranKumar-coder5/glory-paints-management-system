@@ -31,6 +31,15 @@ const vehicleSchema = new mongoose.Schema(
       trim: true,
       default: "",
     },
+    fuelType: {
+      type: String,
+      enum: ["petrol", "diesel", "cng", "electric", "hybrid", "other"],
+      default: "petrol",
+    },
+    odometer: {
+      type: Number,
+      default: 0,
+    },
     licensePlate: {
       type: String,
       required: [true, "License plate is required"],
@@ -104,6 +113,10 @@ const vehicleSchema = new mongoose.Schema(
         uploadedBy: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
       },
     ],
+    complaintDescription: {
+      type: String,
+      default: "",
+    },
     inspectionNotes: {
       type: String,
       default: "",

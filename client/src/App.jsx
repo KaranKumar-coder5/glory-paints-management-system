@@ -14,6 +14,8 @@ import VehicleDetailPage from "./pages/vehicles/VehicleDetailPage";
 import VehicleEditPage from "./pages/vehicles/VehicleEditPage";
 import JobCardListPage from "./pages/jobs/JobCardListPage";
 import JobCardDetailPage from "./pages/jobs/JobCardDetailPage";
+import CreateJobCardPage from "./pages/jobs/CreateJobCardPage";
+import EditJobCardPage from "./pages/jobs/EditJobCardPage";
 import FCListPage from "./pages/fc/FCListPage";
 import FCDetailPage from "./pages/fc/FCDetailPage";
 import CustomerHistoryPage from "./pages/customers/CustomerHistoryPage";
@@ -47,7 +49,10 @@ function App() {
 
           {/* Job Cards */}
           <Route path="/jobs" element={<JobCardListPage />} />
+          <Route path="/jobs/new" element={<CreateJobCardPage />} />
+          <Route path="/jobs/new/:vehicleId" element={<CreateJobCardPage />} />
           <Route path="/jobs/:id" element={<JobCardDetailPage />} />
+          <Route path="/jobs/:id/edit" element={<EditJobCardPage />} />
 
           {/* Customers */}
           <Route path="/customers" element={<CustomerHistoryPage />} />

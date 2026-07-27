@@ -45,11 +45,17 @@ const validatePagination = [
   handleValidation,
 ];
 
+const validateJobCard = [
+  body("vehicle").isMongoId().withMessage("Valid vehicle ID is required"),
+  handleValidation,
+];
+
 module.exports = {
   handleValidation,
   validateRegistration,
   validateLogin,
   validateVehicle,
+  validateJobCard,
   validateIdParam,
   validatePagination,
 };
