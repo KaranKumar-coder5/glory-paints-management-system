@@ -50,12 +50,18 @@ const validateJobCard = [
   handleValidation,
 ];
 
+const validateInvoice = [
+  body("jobCard").isMongoId().withMessage("Valid job card ID is required"),
+  handleValidation,
+];
+
 module.exports = {
   handleValidation,
   validateRegistration,
   validateLogin,
   validateVehicle,
   validateJobCard,
+  validateInvoice,
   validateIdParam,
   validatePagination,
 };

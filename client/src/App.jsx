@@ -20,8 +20,8 @@ import FCListPage from "./pages/fc/FCListPage";
 import FCDetailPage from "./pages/fc/FCDetailPage";
 import CustomerHistoryPage from "./pages/customers/CustomerHistoryPage";
 import InvoiceListPage from "./pages/invoices/InvoiceListPage";
-import InvoiceCreatePage from "./pages/invoices/InvoiceCreatePage";
-import InvoicePreviewPage from "./pages/invoices/InvoicePreviewPage";
+import InvoiceDetailPage from "./pages/invoices/InvoiceDetailPage";
+import InvoiceEditPage from "./pages/invoices/InvoiceEditPage";
 import InventoryListPage from "./pages/inventory/InventoryListPage";
 import InventoryFormPage from "./pages/inventory/InventoryFormPage";
 import EmployeeListPage from "./pages/employees/EmployeeListPage";
@@ -68,8 +68,8 @@ function App() {
 
             {/* Invoices */}
             <Route path="/invoices" element={<InvoiceListPage />} />
-            <Route path="/invoices/new" element={<InvoiceCreatePage />} />
-            <Route path="/invoices/:id" element={<InvoicePreviewPage />} />
+            <Route path="/invoices/:id" element={<InvoiceDetailPage />} />
+            <Route path="/invoices/:id/edit" element={<InvoiceEditPage />} />
 
             {/* Inventory */}
             <Route path="/inventory" element={<InventoryListPage />} />

@@ -23,6 +23,7 @@ const StatusBadge = ({ status }) => {
     scheduled: "blue",
     unpaid: "red",
     partial: "yellow",
+    partially_paid: "yellow",
     paid: "green",
     low: "gray",
     medium: "blue",

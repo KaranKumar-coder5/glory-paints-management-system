@@ -10,7 +10,6 @@ import {
   Mail,
   Car,
   Wrench,
-  DollarSign,
   FileText,
   Clock,
   Camera,
@@ -27,6 +26,7 @@ import { FullPageSpinner } from "../../components/ui/Spinner";
 import ConfirmDialog from "../../components/ui/ConfirmDialog";
 import Modal from "../../components/ui/Modal";
 import Input from "../../components/ui/Input";
+import Badge from "../../components/ui/Badge";
 import { VEHICLE_STATUSES } from "../../utils/constants";
 import { formatDate, formatCurrency, formatStatus } from "../../utils/formatters";
 import { cn } from "../../utils/helpers";
@@ -55,12 +55,22 @@ const VehicleDetailPage = () => {
   const [statusNotes, setStatusNotes] = useState("");
   const [updating, setUpdating] = useState(false);
   const [deleting, setDeleting] = useState(false);
+  const [invoice, setInvoice] = useState(null);
 
   const fetchVehicle = useCallback(async () => {
     try {
       setLoading(true);
       const response = await axiosInstance.get(API_ENDPOINTS.VEHICLES.BY_ID(id));
       setVehicle(response.data.vehicle || response.data);
+      try {
+        const invoiceRes = await axiosInstance.get(API_ENDPOINTS.INVOICES.BASE, {
+          params: { search: id, limit: 1 },
+        });
+        const invoices = invoiceRes.data.invoices || [];
+        setInvoice(invoices.length > 0 ? invoices[0] : null);
+      } catch {
+        setInvoice(null);
+      }
     } catch (error) {
       addToast(error.response?.data?.message || "Failed to fetch vehicle details", "error");
       navigate("/vehicles");
@@ -452,14 +462,17 @@ const VehicleDetailPage = () => {
                 </Link>
               )}
 
-              {isOwner && (
-                <Link
-                  to={`/vehicles/${id}/invoice`}
-                  className="block"
-                >
+              {invoice && (
+                <Link to={`/invoices/${invoice._id}`} className="block">
                   <Button variant="outline" className="w-full justify-start gap-2">
-                    <DollarSign className="h-4 w-4" />
-                    Generate Invoice
+                    <FileText className="h-4 w-4" />
+                    View Invoice
+                    <Badge
+                      color={invoice.paymentStatus === "paid" ? "green" : invoice.paymentStatus === "pending" ? "red" : "yellow"}
+                      className="ml-auto"
+                    >
+                      {invoice.paymentStatus === "paid" ? "Paid" : invoice.paymentStatus === "pending" ? "Unpaid" : "Partial"}
+                    </Badge>
                   </Button>
                 </Link>
               )}

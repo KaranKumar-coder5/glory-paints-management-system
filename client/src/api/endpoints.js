@@ -32,8 +32,10 @@ export const API_ENDPOINTS = {
   INVOICES: {
     BASE: "/invoices",
     BY_ID: (id) => `/invoices/${id}`,
-    PAYMENT: (id) => `/invoices/${id}/payment`,
-    STATS: "/invoices/stats",
+    MARK_PAID: (id) => `/invoices/${id}/mark-paid`,
+    PARTIAL_PAYMENT: (id) => `/invoices/${id}/partial-payment`,
+    CANCEL: (id) => `/invoices/${id}/cancel`,
+    REVENUE_SUMMARY: "/invoices/revenue-summary",
   },
   INVENTORY: {
     BASE: "/inventory",

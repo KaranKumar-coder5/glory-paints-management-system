@@ -14,6 +14,8 @@ import {
   X,
   ChevronRight,
   AlertTriangle,
+  FileText,
+  Receipt,
 } from "lucide-react";
 import axiosInstance from "../../api/axiosInstance";
 import { API_ENDPOINTS } from "../../api/endpoints";
@@ -58,12 +60,22 @@ const JobCardDetailPage = () => {
   const [newPart, setNewPart] = useState({ name: "", quantity: "", unitPrice: "" });
   const [actionLoading, setActionLoading] = useState(false);
   const [deleting, setDeleting] = useState(false);
+  const [hasInvoice, setHasInvoice] = useState(false);
 
   const fetchJobCard = useCallback(async () => {
     try {
       setLoading(true);
       const { data } = await axiosInstance.get(API_ENDPOINTS.JOBS.BY_ID(id));
       setJobCard(data.data || data);
+      try {
+        const invoiceRes = await axiosInstance.get(API_ENDPOINTS.INVOICES.BASE, {
+          params: { search: id, limit: 1 },
+        });
+        const invoices = invoiceRes.data.invoices || [];
+        setHasInvoice(invoices.length > 0);
+      } catch {
+        setHasInvoice(false);
+      }
     } catch (error) {
       addToast(error.response?.data?.message || "Failed to fetch job card", "error");
       navigate("/jobs");
@@ -474,6 +486,53 @@ const JobCardDetailPage = () => {
                   Edit Job Card
                 </Button>
               </Link>
+
+              {isOwner && jobCard.status === "completed" && hasInvoice && (
+                <Button
+                  variant="outline"
+                  className="w-full justify-start gap-2"
+                  onClick={async () => {
+                    try {
+                      const res = await axiosInstance.get(API_ENDPOINTS.INVOICES.BASE, {
+                        params: { search: jobCard.jobId, limit: 1 },
+                      });
+                      const invoices = res.data.invoices || [];
+                      if (invoices.length > 0) {
+                        navigate(`/invoices/${invoices[0]._id}`);
+                      }
+                    } catch {
+                      addToast("Failed to load invoice", "error");
+                    }
+                  }}
+                  icon={FileText}
+                >
+                  View Invoice
+                </Button>
+              )}
+
+              {isOwner && jobCard.status === "completed" && !hasInvoice && (
+                <Button
+                  variant="default"
+                  className="w-full justify-start gap-2"
+                  onClick={async () => {
+                    setActionLoading(true);
+                    try {
+                      const res = await axiosInstance.post(API_ENDPOINTS.INVOICES.BASE, {
+                        jobCard: jobCard._id,
+                      });
+                      addToast("Invoice generated successfully", "success");
+                      navigate(`/invoices/${res.data.invoice._id}`);
+                    } catch (err) {
+                      addToast(err.response?.data?.message || "Failed to generate invoice", "error");
+                    } finally {
+                      setActionLoading(false);
+                    }
+                  }}
+                  icon={Receipt}
+                >
+                  Generate Invoice
+                </Button>
+              )}
 
               {canAdvance && nextStatus && (
                 <Button

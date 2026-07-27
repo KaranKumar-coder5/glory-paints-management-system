@@ -108,9 +108,10 @@ export const INVENTORY_CATEGORIES = [
 ];
 
 export const PAYMENT_STATUSES = {
-  unpaid: { label: "Unpaid", color: "red" },
-  partial: { label: "Partial", color: "yellow" },
+  pending: { label: "Pending", color: "red" },
+  partially_paid: { label: "Partially Paid", color: "yellow" },
   paid: { label: "Paid", color: "green" },
+  cancelled: { label: "Cancelled", color: "gray" },
 };
 
 export const PAYMENT_METHODS = [
@@ -118,5 +119,12 @@ export const PAYMENT_METHODS = [
   { value: "upi", label: "UPI" },
   { value: "card", label: "Card" },
   { value: "bank_transfer", label: "Bank Transfer" },
-  { value: "other", label: "Other" },
+  { value: "cheque", label: "Cheque" },
+];
+
+export const INVOICE_STATUSES = [
+  { key: "pending", label: "Pending", color: "red" },
+  { key: "partially_paid", label: "Partially Paid", color: "yellow" },
+  { key: "paid", label: "Paid", color: "green" },
+  { key: "cancelled", label: "Cancelled", color: "gray" },
 ];
