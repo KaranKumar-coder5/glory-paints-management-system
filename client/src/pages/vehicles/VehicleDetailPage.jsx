@@ -61,7 +61,7 @@ const VehicleDetailPage = () => {
     try {
       setLoading(true);
       const response = await axiosInstance.get(API_ENDPOINTS.VEHICLES.BY_ID(id));
-      setVehicle(response.data.vehicle || response.data);
+      setVehicle(response.data.data || response.data.vehicle || response.data);
       try {
         const invoiceRes = await axiosInstance.get(API_ENDPOINTS.INVOICES.BASE, {
           params: { search: id, limit: 1 },

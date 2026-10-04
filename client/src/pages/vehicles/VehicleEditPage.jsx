@@ -49,7 +49,7 @@ const VehicleEditPage = () => {
         setLoading(true);
         setFetchError(null);
         const response = await axiosInstance.get(API_ENDPOINTS.VEHICLES.BY_ID(id));
-        const vehicle = response.data;
+        const vehicle = response.data.data || response.data;
 
         setFormData({
           customerName: vehicle.customer?.name || "",
