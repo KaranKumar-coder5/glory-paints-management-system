@@ -46,8 +46,8 @@ const InvoiceListPage = () => {
       if (statusFilter) params.paymentStatus = statusFilter;
       if (methodFilter) params.paymentMethod = methodFilter;
       const res = await axiosInstance.get(API_ENDPOINTS.INVOICES.BASE, { params });
-      setInvoices(res.data.invoices || []);
-      setPagination(res.data.pagination || null);
+      setInvoices(res.data.data?.invoices || res.data.invoices || []);
+      setPagination(res.data.data?.pagination || res.data.pagination || null);
     } catch (err) {
       addToast(err.response?.data?.message || "Failed to load invoices", "error");
     } finally {
