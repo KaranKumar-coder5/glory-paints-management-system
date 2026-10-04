@@ -1,11 +1,19 @@
-require("dotenv").config({ path: require("path").join(__dirname, ".env") });
+require("dotenv").config({ path: require("path").join(__dirname, "../.env") });
 
 const mongoose = require("mongoose");
-const User = require("./src/models/User");
-const Vehicle = require("./src/models/Vehicle");
-const Inventory = require("./src/models/Inventory");
-const StatusLog = require("./src/models/StatusLog");
-const FCCertificate = require("./src/models/FCCertificate");
+const dns = require("dns");
+
+// DNS workaround for Windows c-ares ECONNREFUSED issue
+const current = dns.getServers();
+if (current.length === 1 && current[0] === "127.0.0.1") {
+  dns.setServers(["8.8.8.8", "8.8.4.4"]);
+}
+
+const User = require("./models/User");
+const Vehicle = require("./models/Vehicle");
+const Inventory = require("./models/Inventory");
+const StatusLog = require("./models/StatusLog");
+const FCCertificate = require("./models/FCCertificate");
 
 const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost:27017/glory_paints";
 
