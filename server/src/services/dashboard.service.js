@@ -3,6 +3,7 @@ const User = require("../models/User");
 const Inventory = require("../models/Inventory");
 const FCCertificate = require("../models/FCCertificate");
 const StatusLog = require("../models/StatusLog");
+const Invoice = require("../models/Invoice");
 
 const getOwnerSummary = async () => {
   const [
@@ -113,20 +114,20 @@ const getMonthlyRevenue = async () => {
   for (let i = 5; i >= 0; i--) {
     const date = new Date(now.getFullYear(), now.getMonth() - i, 1);
     const startOfMonth = new Date(date.getFullYear(), date.getMonth(), 1);
-    const endOfMonth = new Date(date.getFullYear(), date.getMonth() + 1, 0, 23, 59, 59);
+    const endOfMonth = new Date(date.getFullYear(), date.getMonth() + 1, 0, 23, 59, 59, 999);
 
-    const result = await Vehicle.aggregate([
+    const result = await Invoice.aggregate([
       {
         $match: {
           isDeleted: false,
-          actualDeliveryDate: { $gte: startOfMonth, $lte: endOfMonth },
-          actualCost: { $gt: 0 },
+          paymentStatus: { $ne: "cancelled" },
+          invoiceDate: { $gte: startOfMonth, $lte: endOfMonth },
         },
       },
       {
         $group: {
           _id: null,
-          total: { $sum: "$actualCost" },
+          total: { $sum: "$grandTotal" },
         },
       },
     ]);

@@ -212,6 +212,25 @@ const changeStatus = async (id, newStatus, userId, notes = "") => {
     throw new ApiError(400, "Cannot change status of a completed or cancelled job card");
   }
 
+  const allowedTransitions = {
+    pending: ["inspection"],
+    inspection: ["repair_in_progress"],
+    repair_in_progress: ["waiting_for_parts", "painting"],
+    waiting_for_parts: ["repair_in_progress", "painting"],
+    painting: ["quality_check"],
+    quality_check: ["completed"],
+  };
+
+  if (newStatus !== "cancelled") {
+    const validNextStatuses = allowedTransitions[jobCard.status] || [];
+    if (!validNextStatuses.includes(newStatus)) {
+      throw new ApiError(
+        400,
+        `Invalid status transition from '${jobCard.status}' to '${newStatus}'`
+      );
+    }
+  }
+
   const fromStatus = jobCard.status;
   jobCard.status = newStatus;
   jobCard.updatedBy = userId;

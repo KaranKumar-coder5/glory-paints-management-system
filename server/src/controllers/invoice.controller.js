@@ -1,4 +1,5 @@
 const asyncHandler = require("../utils/asyncHandler");
+const ApiResponse = require("../utils/ApiResponse");
 const invoiceService = require("../services/invoice.service");
 
 const generateInvoice = asyncHandler(async (req, res) => {
@@ -6,12 +7,12 @@ const generateInvoice = asyncHandler(async (req, res) => {
     req.body.jobCard,
     req.user._id
   );
-  res.status(201).json({ success: true, invoice });
+  ApiResponse.created(res, invoice, "Invoice generated successfully");
 });
 
 const getInvoice = asyncHandler(async (req, res) => {
   const invoice = await invoiceService.getInvoiceById(req.params.id);
-  res.json({ success: true, invoice });
+  ApiResponse.success(res, invoice, "Invoice retrieved successfully");
 });
 
 const updateInvoice = asyncHandler(async (req, res) => {
@@ -20,12 +21,12 @@ const updateInvoice = asyncHandler(async (req, res) => {
     req.body,
     req.user._id
   );
-  res.json({ success: true, invoice });
+  ApiResponse.success(res, invoice, "Invoice updated successfully");
 });
 
 const deleteInvoice = asyncHandler(async (req, res) => {
   await invoiceService.deleteInvoice(req.params.id);
-  res.json({ success: true, message: "Invoice deleted successfully" });
+  ApiResponse.success(res, null, "Invoice deleted successfully");
 });
 
 const markPaid = asyncHandler(async (req, res) => {
@@ -34,7 +35,7 @@ const markPaid = asyncHandler(async (req, res) => {
     req.body.paymentMethod,
     req.user._id
   );
-  res.json({ success: true, invoice });
+  ApiResponse.success(res, invoice, "Invoice marked as paid");
 });
 
 const partialPayment = asyncHandler(async (req, res) => {
@@ -44,12 +45,12 @@ const partialPayment = asyncHandler(async (req, res) => {
     req.body.paymentMethod,
     req.user._id
   );
-  res.json({ success: true, invoice });
+  ApiResponse.success(res, invoice, "Partial payment recorded");
 });
 
 const cancelInvoice = asyncHandler(async (req, res) => {
   const invoice = await invoiceService.cancelInvoice(req.params.id, req.user._id);
-  res.json({ success: true, invoice });
+  ApiResponse.success(res, invoice, "Invoice cancelled successfully");
 });
 
 const getInvoices = asyncHandler(async (req, res) => {
@@ -62,12 +63,12 @@ const getInvoices = asyncHandler(async (req, res) => {
     paymentMethod: paymentMethod || "",
     sort: sort || "-createdAt",
   });
-  res.json({ success: true, ...result });
+  ApiResponse.success(res, result, "Invoices retrieved successfully");
 });
 
 const getRevenueSummary = asyncHandler(async (req, res) => {
   const summary = await invoiceService.getRevenueSummary();
-  res.json({ success: true, summary });
+  ApiResponse.success(res, summary, "Revenue summary retrieved successfully");
 });
 
 module.exports = {
